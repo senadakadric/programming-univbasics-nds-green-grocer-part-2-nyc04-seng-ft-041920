@@ -49,16 +49,21 @@ def checkout(cart, coupons)
   #
   # BEFORE it begins the work of calculating the total (or else you might have
   # some irritated customers
+  
+  #creating a new cart that is consolidated, by calling consolidate cart
   consolidated_cart = consolidate_cart(cart)
+  # calling apply_coupons and apply_clearance to our consolidated cart
   apply_coupons(consolidated_cart, coupons)
   apply_clearance(consolidated_cart)
 
+  # creating a grand total, and accumulating it by iterating through the consolidated cart and multiplying each item Hash's price by its count
   grand_total = 0
   consolidated_cart.each do |item_hash|
       value = item_hash[:price] * item_hash[:count]
       grand_total += value
   end
   
+  #it the carts total is over 100$, the customer gets an additional 10% off
   if grand_total > 100
     grand_total *= 0.9
   end
