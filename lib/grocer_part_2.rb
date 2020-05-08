@@ -9,13 +9,15 @@ def apply_coupons(cart, coupons)
     coupons.each do |coupon_hash|
       if cart_hash[:item] == coupon_hash[:item]
         #if the cart and the coupon have the same item, then we want to create a new item in the cart that is "item w/ coupon"
-        #but we only want to do that once and update it for how many there are.. don't want to create a new item w/ coupon each time we iterate over avocado... hm
-        #since cart is an array, we can shovel in the creation of the new w/ coupon item
+        #but we only want to do that IF there are enough of that item in the cart. so only if the count of that item is equal to or greater than the number of items the coupon applies to
+      
         if cart_hash[:count] >= coupon_hash[:num]
+          #we also want to update the value of cart_hash[:count] so that if we had 3 avocados to start with and used the coupon for 2 avocados, we'll now have 1 avocado at regular price
         cart_hash[:count] -= coupon_hash[:num]
+        #since cart is an array, we can shovel in the creation of the new w/ coupon item
         cart << { item: "#{cart_hash[:item]} W/COUPON", price: coupon_hash[:cost]/coupon_hash[:num], clearance: cart_hash[:clearance], count: coupon_hash[:num]}
 
-        #we also want to update the value of cart_hash[:count] so that if we had 3 avocados to start with and used the coupon for 2 avocados, we'll now have 1 avocado at regular price
+        
         
         end
       end
