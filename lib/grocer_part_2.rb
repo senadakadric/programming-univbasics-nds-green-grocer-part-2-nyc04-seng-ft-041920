@@ -16,8 +16,6 @@ def apply_coupons(cart, coupons)
         cart_hash[:count] -= coupon_hash[:num]
         #since cart is an array, we can shovel in the creation of the new w/ coupon item
         cart << { item: "#{cart_hash[:item]} W/COUPON", price: coupon_hash[:cost]/coupon_hash[:num], clearance: cart_hash[:clearance], count: coupon_hash[:num]}
-
-        
         
         end
       end
@@ -30,8 +28,11 @@ def apply_clearance(cart)
   # Consult README for inputs and outputs
   #
   # REMEMBER: This method **should** update cart
+  #iterate through the cart array to get each hash of cart items
   cart.each do |cart_hash|
+    #if the item is on clearance
     if cart_hash[:clearance] == true
+      #then we will multiply it by 0.8, which makes it 20% off. and round to two decimal points
       cart_hash[:price] = (cart_hash[:price] * 0.8).round(2)
     end
   end
